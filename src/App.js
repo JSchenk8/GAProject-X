@@ -8,6 +8,9 @@ const App = () => {
   //! States
   const [dropdownState, updateDropdownState] = useState('')
   const [alcoholArray, updateAlcohol] = useState([])
+  // const [drinkRecipe, updateDrinkRecipe] = useState([])
+  let drinkRecipeInstructions
+
 
   //! Toggle Display
   function toggleDropdownDisplay() {
@@ -23,6 +26,8 @@ const App = () => {
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${alcoholString}`)
       .then(resp => resp.json())
       .then(alcoholData => {
+        console.log(`alcoholData is ${alcoholData}`)
+        console.log(`alcoholData.drinks is ${alcoholData.drinks}`)
         updateAlcohol(alcoholData.drinks)
       })
 
@@ -35,6 +40,7 @@ const App = () => {
     } else {
       const randomNumber = Math.floor(Math.random() * alcoholArray.length)
       const randomDrink = alcoholArray[randomNumber]
+      fetchDrinkRecipe(randomDrink.idDrink)
       return <div className="card">
         <div className="card-image">
           <figure className="image is-48by48">
@@ -43,15 +49,39 @@ const App = () => {
         </div>
         <div className="card-content">
           <div className="content">
-            <h3>{randomDrink.strDrink}</h3>
-            <button>Details:</button>
+            <h2>{randomDrink.strDrink}</h2>
+            {/* <button className="button" onClick={fetchDrinkRecipe(randomDrink.idDrink)}>Details:</button> */}
+            <h3>Instructions:</h3>
+            <p>{drinkRecipeInstructions}</p>
           </div>
         </div>
       </div>
-  
-    }
-    
 
+    }
+
+
+  }
+
+  // function displayDrinkRecipe() {
+  //   console.log(` instructions are : ${drinkRecipeInstructions}`)
+  //   return <div className="card">
+  //     <div className="card-content">
+  //       <div className="content">
+  //         <h3>Instructions:</h3>
+  //         <p>{drinkRecipeInstructions}</p>
+  //       </div>
+  //     </div>
+  //   </div>
+  // }
+
+
+  function fetchDrinkRecipe(drinkID) {
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkID}`)
+      .then(resp => resp.json())
+      .then(drinkRecipe => {
+        console.log(`drink recipe is: ${drinkRecipe.drinks[0].strInstructions}`)
+        drinkRecipeInstructions = drinkRecipe.drinks[0].strInstructions
+      })
   }
 
   console.log(alcoholArray)
@@ -63,7 +93,7 @@ const App = () => {
       <div className="hero-head">
         <div className="">
           <p className="title">
-            Happy Hour! Come and look for some cocktails...
+            Happy Hour! Pick your alcohol and let us provide you with a random cocktail...
           </p>
         </div>
       </div>
@@ -82,36 +112,50 @@ const App = () => {
               <div className="dropdown-content">
                 <a onClick={() => {
                   selectAlcohol('Bourbon')
+                  toggleDropdownDisplay()
                 }} href="#" className="dropdown-item">Bourbon</a>
                 <hr className="dropdown-divider"></hr>
                 <a onClick={() => {
                   selectAlcohol('Champagne')
+                  toggleDropdownDisplay()
                 }} href="#" className="dropdown-item">Champagne</a>
                 <hr className="dropdown-divider"></hr>
                 <a onClick={() => {
                   selectAlcohol('Gin')
+                  toggleDropdownDisplay()
                 }} href="#" className="dropdown-item">Gin</a>
                 <hr className="dropdown-divider"></hr>
                 <a onClick={() => {
                   selectAlcohol('Rum')
+                  toggleDropdownDisplay()
                 }} href="#" className="dropdown-item">Rum</a>
                 <hr className="dropdown-divider"></hr>
                 <a onClick={() => {
                   selectAlcohol('Vodka')
+                  toggleDropdownDisplay()
                 }} href="#" className="dropdown-item">Vodka</a>
                 <hr className="dropdown-divider"></hr>
                 <a onClick={() => {
                   selectAlcohol('Whiskey')
+                  toggleDropdownDisplay()
                 }} href="#" className="dropdown-item">Whiskey</a>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div className="hero-foot">
+        <div className="container has-text-centered is-clipped">
+          Scroll Down
+        </div>
+      </div>
     </section>
     <section className="section">
       {displayAlcoholCards()}
     </section>
+    {/* <section className="section">
+      {displayDrinkRecipe()}
+    </section> */}
 
   </div>
 }
