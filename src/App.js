@@ -8,9 +8,61 @@ const App = () => {
   //! States
   const [dropdownState, updateDropdownState] = useState('')
   const [alcoholArray, updateAlcohol] = useState([])
-  // const [drinkRecipe, updateDrinkRecipe] = useState([])
-  let drinkRecipeInstructions
 
+  const bourbonIds = []
+  const champagneIds = []
+  const ginIds = []
+  const rumIds = []
+  const vodkaIds = []
+  const whiskeyIds = []
+  //! Get Bourbon Ids
+  fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Bourbon')
+    .then(resp => resp.json())
+    .then(ginDrinks => {
+      ginDrinks.drinks.map((drink) => {
+        bourbonIds.push(drink.idDrink)
+      })
+    })
+  //! Get Champagne Ids
+  fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Champagne')
+    .then(resp => resp.json())
+    .then(ginDrinks => {
+      ginDrinks.drinks.map((drink) => {
+        champagneIds.push(drink.idDrink)
+      })
+    })
+  //! Get Gin Ids
+  fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin')
+    .then(resp => resp.json())
+    .then(ginDrinks => {
+      ginDrinks.drinks.map((drink) => {
+        ginIds.push(drink.idDrink)
+      })
+    })
+  //! Get Rum Ids
+  fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Rum')
+    .then(resp => resp.json())
+    .then(ginDrinks => {
+      ginDrinks.drinks.map((drink) => {
+        rumIds.push(drink.idDrink)
+      })
+    })
+  //! Get Vodka Ids
+  fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Vodka')
+    .then(resp => resp.json())
+    .then(ginDrinks => {
+      ginDrinks.drinks.map((drink) => {
+        vodkaIds.push(drink.idDrink)
+      })
+    })
+  //! Get Whiskey Ids
+  fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Whiskey')
+    .then(resp => resp.json())
+    .then(ginDrinks => {
+      ginDrinks.drinks.map((drink) => {
+        whiskeyIds.push(drink.idDrink)
+      })
+    })
 
   //! Toggle Display
   function toggleDropdownDisplay() {
@@ -22,14 +74,56 @@ const App = () => {
   }
 
   function selectAlcohol(alcoholString) {
+    if (alcoholString === 'Bourbon') {
+      const randomNumber = Math.floor(Math.random() * bourbonIds.length)
+      const randomBourbonDrinkId = bourbonIds[randomNumber]
+      fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${randomBourbonDrinkId}`)
+        .then(resp => resp.json())
+        .then(bourbonDrink => {
+          updateAlcohol(bourbonDrink.drinks[0])
+        })
+    } else if (alcoholString === 'Champagne') {
+      const randomNumber = Math.floor(Math.random() * champagneIds.length)
+      const randomChampagneDrinkId = champagneIds[randomNumber]
+      fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${randomChampagneDrinkId}`)
+        .then(resp => resp.json())
+        .then(champagneDrink => {
+          updateAlcohol(champagneDrink.drinks[0])
+        })
+    } else if (alcoholString === 'Gin') {
+      const randomNumber = Math.floor(Math.random() * ginIds.length)
+      const randomGinDrinkId = ginIds[randomNumber]
+      fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${randomGinDrinkId}`)
+        .then(resp => resp.json())
+        .then(ginDrink => {
+          updateAlcohol(ginDrink.drinks[0])
+        })
+    } else if (alcoholString === 'Rum') {
+      const randomNumber = Math.floor(Math.random() * rumIds.length)
+      const randomRumDrinkId = rumIds[randomNumber]
+      fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${randomRumDrinkId}`)
+        .then(resp => resp.json())
+        .then(rumDrink => {
+          updateAlcohol(rumDrink.drinks[0])
+        })
+    } else if (alcoholString === 'Vodka') {
+      const randomNumber = Math.floor(Math.random() * vodkaIds.length)
+      const randomVodkaDrinkId = vodkaIds[randomNumber]
+      fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${randomVodkaDrinkId}`)
+        .then(resp => resp.json())
+        .then(vodkaDrink => {
+          updateAlcohol(vodkaDrink.drinks[0])
+        })
+    } else if (alcoholString === 'Whiskey') {
+      const randomNumber = Math.floor(Math.random() * whiskeyIds.length)
+      const randomWhiskeyDrinkId = whiskeyIds[randomNumber]
+      fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${randomWhiskeyDrinkId}`)
+        .then(resp => resp.json())
+        .then(whiskeyDrink => {
+          updateAlcohol(whiskeyDrink.drinks[0])
+        })
+    }
 
-    fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${alcoholString}`)
-      .then(resp => resp.json())
-      .then(alcoholData => {
-        console.log(`alcoholData is ${alcoholData}`)
-        console.log(`alcoholData.drinks is ${alcoholData.drinks}`)
-        updateAlcohol(alcoholData.drinks)
-      })
 
   }
 
@@ -38,55 +132,48 @@ const App = () => {
     if (alcoholArray.length === 0) {
       return
     } else {
-      const randomNumber = Math.floor(Math.random() * alcoholArray.length)
-      const randomDrink = alcoholArray[randomNumber]
-      fetchDrinkRecipe(randomDrink.idDrink)
       return <div className="card">
         <div className="card-image">
           <figure className="image is-48by48">
-            <img className="cardImage" src={randomDrink.strDrinkThumb} alt={randomDrink.strDrink} />
+            <img className="cardImage" src={alcoholArray.strDrinkThumb} alt={alcoholArray.strDrink} />
           </figure>
         </div>
         <div className="card-content">
           <div className="content">
-            <h2>{randomDrink.strDrink}</h2>
-            {/* <button className="button" onClick={fetchDrinkRecipe(randomDrink.idDrink)}>Details:</button> */}
+            <h2>{alcoholArray.strDrink}</h2>
             <h3>Instructions:</h3>
-            <p>{drinkRecipeInstructions}</p>
+            <p>Glass: {alcoholArray.strGlass}</p>
+            <ul>{listIngredients()}</ul>
+            <p>{alcoholArray.strInstructions}</p>
           </div>
         </div>
       </div>
 
     }
-
-
   }
 
-  // function displayDrinkRecipe() {
-  //   console.log(` instructions are : ${drinkRecipeInstructions}`)
-  //   return <div className="card">
-  //     <div className="card-content">
-  //       <div className="content">
-  //         <h3>Instructions:</h3>
-  //         <p>{drinkRecipeInstructions}</p>
-  //       </div>
-  //     </div>
-  //   </div>
-  // }
-
-
-  function fetchDrinkRecipe(drinkID) {
-    fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkID}`)
-      .then(resp => resp.json())
-      .then(drinkRecipe => {
-        console.log(`drink recipe is: ${drinkRecipe.drinks[0].strInstructions}`)
-        drinkRecipeInstructions = drinkRecipe.drinks[0].strInstructions
-      })
+  function listIngredients() {
+    const ingredientsArray = []
+    ingredientsArray.push(alcoholArray.strIngredient1)
+    ingredientsArray.push(alcoholArray.strIngredient2)
+    ingredientsArray.push(alcoholArray.strIngredient3)
+    ingredientsArray.push(alcoholArray.strIngredient4)
+    ingredientsArray.push(alcoholArray.strIngredient5)
+    ingredientsArray.push(alcoholArray.strIngredient6)
+    ingredientsArray.push(alcoholArray.strIngredient7)
+    ingredientsArray.push(alcoholArray.strIngredient8)
+    ingredientsArray.push(alcoholArray.strIngredient9)
+    ingredientsArray.push(alcoholArray.strIngredient10)
+    ingredientsArray.push(alcoholArray.strIngredient11)
+    ingredientsArray.push(alcoholArray.strIngredient12)
+    ingredientsArray.push(alcoholArray.strIngredient13)
+    ingredientsArray.push(alcoholArray.strIngredient14)
+    ingredientsArray.push(alcoholArray.strIngredient15)
+    console.log(ingredientsArray)
+    ingredientsArray.map((ingredient, index) => {
+      return <li key={index}>{ingredient}</li>
+    })
   }
-
-  console.log(alcoholArray)
-
-
   //! Render on Screen
   return <div>
     <section className="hero is-fullheight header-image is-primary">
