@@ -8,7 +8,6 @@ const App = () => {
   //! States
   const [dropdownState, updateDropdownState] = useState('')
   const [alcoholArray, updateAlcohol] = useState([])
-
   const bourbonIds = []
   const champagneIds = []
   const ginIds = []
@@ -143,7 +142,10 @@ const App = () => {
             <h2>{alcoholArray.strDrink}</h2>
             <h3>Instructions:</h3>
             <p>Glass: {alcoholArray.strGlass}</p>
+            <p>Ingredients:</p>
             <ul>{listIngredients()}</ul>
+            <p>Quantities:</p>
+            <ul>{listMeasures()}</ul>
             <p>{alcoholArray.strInstructions}</p>
           </div>
         </div>
@@ -169,11 +171,40 @@ const App = () => {
     ingredientsArray.push(alcoholArray.strIngredient13)
     ingredientsArray.push(alcoholArray.strIngredient14)
     ingredientsArray.push(alcoholArray.strIngredient15)
-    console.log(ingredientsArray)
-    ingredientsArray.map((ingredient, index) => {
+    const filteredIngredientsArray = ingredientsArray.filter((ingredient) => {
+      return (ingredient != null)
+    })
+    
+    return filteredIngredientsArray.map((ingredient, index) => {
       return <li key={index}>{ingredient}</li>
     })
   }
+
+  function listMeasures() {
+    const measuresArray = []
+    measuresArray.push(alcoholArray.strMeasure1)
+    measuresArray.push(alcoholArray.strMeasure2)
+    measuresArray.push(alcoholArray.strMeasure3)
+    measuresArray.push(alcoholArray.strMeasure4)
+    measuresArray.push(alcoholArray.strMeasure5)
+    measuresArray.push(alcoholArray.strMeasure6)
+    measuresArray.push(alcoholArray.strMeasure7)
+    measuresArray.push(alcoholArray.strMeasure8)
+    measuresArray.push(alcoholArray.strMeasure9)
+    measuresArray.push(alcoholArray.strMeasure10)
+    measuresArray.push(alcoholArray.strMeasure11)
+    measuresArray.push(alcoholArray.strMeasure12)
+    measuresArray.push(alcoholArray.strMeasure13)
+    measuresArray.push(alcoholArray.strMeasure14)
+    measuresArray.push(alcoholArray.strMeasure15)
+    const filteredMeasuresArray = measuresArray.filter((measure) => {
+      return (measure != null)
+    })
+    return filteredMeasuresArray.map((measure, index) => {
+      return <li key={index}>{measure}</li>
+    })
+  }
+
   //! Render on Screen
   return <div>
     <section className="hero is-fullheight header-image is-primary">
