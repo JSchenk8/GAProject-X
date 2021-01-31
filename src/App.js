@@ -127,9 +127,8 @@ const App = () => {
   }
 
   function displayAlcoholCards() {
-    console.log('Displaying Cards now')
     if (alcoholArray.length === 0) {
-      return
+      return <p>Pick your alcohol!</p>
     } else {
       return <div className="card">
         <div className="card-image">
@@ -144,8 +143,6 @@ const App = () => {
             <p>Glass: {alcoholArray.strGlass}</p>
             <p>Ingredients:</p>
             <ul>{listIngredients()}</ul>
-            <p>Quantities:</p>
-            <ul>{listMeasures()}</ul>
             <p>{alcoholArray.strInstructions}</p>
           </div>
         </div>
@@ -172,15 +169,8 @@ const App = () => {
     ingredientsArray.push(alcoholArray.strIngredient14)
     ingredientsArray.push(alcoholArray.strIngredient15)
     const filteredIngredientsArray = ingredientsArray.filter((ingredient) => {
-      return (ingredient != null)
+      return (ingredient !== null)
     })
-    
-    return filteredIngredientsArray.map((ingredient, index) => {
-      return <li key={index}>{ingredient}</li>
-    })
-  }
-
-  function listMeasures() {
     const measuresArray = []
     measuresArray.push(alcoholArray.strMeasure1)
     measuresArray.push(alcoholArray.strMeasure2)
@@ -198,10 +188,15 @@ const App = () => {
     measuresArray.push(alcoholArray.strMeasure14)
     measuresArray.push(alcoholArray.strMeasure15)
     const filteredMeasuresArray = measuresArray.filter((measure) => {
-      return (measure != null)
+      return (measure !== null)
     })
-    return filteredMeasuresArray.map((measure, index) => {
-      return <li key={index}>{measure}</li>
+    const measuresAndIngredientsArray = []
+    for (let i = 0; i < filteredMeasuresArray.length; i++) {
+      measuresAndIngredientsArray.push(`${filteredMeasuresArray[i]} ${filteredIngredientsArray[i]}`)
+    }
+    const filteredMeasuresAndIngredientsArray = measuresAndIngredientsArray.filter(item => item)
+    return filteredMeasuresAndIngredientsArray.map((ingredient, index) => {
+      return <li key={index}>{ingredient}</li>
     })
   }
 
