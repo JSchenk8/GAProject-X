@@ -1,10 +1,10 @@
-![](images/GALogo.png)
+![](/src/images/GALogo.png)
 
 ### General Assembly Software Engineering Immersive
 
 # Project X: Cocktail Picker
 
-![](images/Homepage.png)
+![](/src/images/Homepage.png)
 
 ## Overview
 
@@ -74,8 +74,8 @@ This stopped the infinite render loop, and meant that the user could select a ra
 
 ### Displaying the Cocktail Cards
 
-![](images/CocktailPhoto.png)
-![](images/IngredientsandMeasures.png)
+![](/src/images/CocktailPhoto.png)
+![](/src/images/IngredientsandMeasures.png)
 
 A simple React function returned JSX to display the cocktail card. 
 
