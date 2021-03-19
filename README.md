@@ -14,7 +14,7 @@ We were given a weekend to pick an API and create a small website using React wh
 
 I chose the Cocktails Database as the API for my project, knowing it was a fairly broad free public API. 
 
-If you want to try the website out, you can check it out here: //! Insert link to website once deployed
+If you want to try the website out, you can check it out here: [](https://jschenk8.github.io/GAProject-X/#)
 
 ### The End Result
 
